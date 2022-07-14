@@ -1,6 +1,6 @@
 import mongoose, { mongo } from 'mongoose'
 import bcrypt from 'bcrypt'
-const SALT_ROUNDS = 6
+const SALT_ROUNDS = 10
 
 const Schema = mongoose.Schema
 
@@ -18,7 +18,8 @@ const passwordSchema = new Schema(
       type: String,
       required: true
     }
-  }
+  },
+  { timestamps: true }
 )
 
 passwordSchema.set('toJSON', {
