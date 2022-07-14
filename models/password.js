@@ -21,19 +21,19 @@ const passwordSchema = new Schema(
   }
 )
 
-userSchema.set('toJSON', {
+passwordSchema.set('toJSON', {
   transform: function (doc, ret) {
     delete ret.password
     return ret
   },
 })
 
-userSchema.pre('save', function (next) {
-  const user = this
-  if (!user.isModified('password')) return next()
-  bcrypt.hash(user.password, SALT_ROUNDS)
+passwordSchema.pre('save', function (next) {
+  const pass = this
+  if (!pass.isModified('password')) return next()
+  bcrypt.hash(pass.password, SALT_ROUNDS)
   .then(hash => {
-    user.password = hash
+    pass.password = hash
     next()
   })
   .catch(err => {
@@ -41,7 +41,7 @@ userSchema.pre('save', function (next) {
   })
 })
 
-userSchema.methods.comparePassword = function (tryPassword, cb) {
+passwordSchema.methods.comparePassword = function (tryPassword, cb) {
   bcrypt.compare(tryPassword, this.password, cb)
 }
 
