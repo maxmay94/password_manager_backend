@@ -12,7 +12,6 @@ const index = async(req, res) => {
 
 const create = async(req, res) => {
   req.body.userId = req.user.profile
-  console.log(req.body)
   try {
     const password = new Password(req.body)
     await password.save()
@@ -22,7 +21,17 @@ const create = async(req, res) => {
   }
 }
 
+const deletePassword = async(req, res) => {
+  try {
+    await Password.findByIdAndDelete(req.params.id)
+    return res.status(204).end()
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+}
+
 export {
   index,
-  create
+  create,
+  deletePassword as delete
 }
