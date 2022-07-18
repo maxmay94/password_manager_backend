@@ -2,7 +2,6 @@ import { Password } from '../models/password.js'
 
 const index = async(req, res) => {
   req.body.userId = req.user.profile
-  
   try{
     const passwords = await Password.find({userId: req.body.userId})
     return res.status(200).json(passwords)
