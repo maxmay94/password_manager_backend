@@ -1,4 +1,4 @@
-import { Password } from '../models/password'
+import { Password } from '../models/password.js'
 
 const index = async(req, res) => {
   try{

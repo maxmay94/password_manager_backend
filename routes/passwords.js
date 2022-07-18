@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import * as passwordCtrl from '../controllers/passwords.js'
-import { decodeUserFromToken, checkAuth } from '../middleware/auth'
+import { decodeUserFromToken, checkAuth } from '../middleware/auth.js'
 
 const router = Router()
 
@@ -9,7 +9,7 @@ const router = Router()
 
 /* ------------------ Private Routes ------------------ */
 router.use(decodeUserFromToken)
-router.get('/', passwordCtrl.index)
-router.post('/', passwordCtrl.create)
+router.get('/', checkAuth, passwordCtrl.index)
+router.post('/', checkAuth, passwordCtrl.create)
 
 export { router }
