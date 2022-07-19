@@ -12,5 +12,6 @@ router.use(decodeUserFromToken)
 router.get('/', checkAuth, passwordCtrl.index)
 router.post('/', checkAuth, passwordCtrl.create)
 router.delete('/:id', checkAuth, passwordCtrl.delete)
+router.patch('/:id', checkAuth, passwordCtrl.update)
 
 export { router }

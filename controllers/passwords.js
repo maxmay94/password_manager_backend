@@ -1,9 +1,12 @@
 import { Password } from '../models/password.js'
+import bcrypt from 'bcrypt'
+const SALT_ROUNDS = 10
 
 const index = async(req, res) => {
   req.body.userId = req.user.profile
   try{
     const passwords = await Password.find({userId: req.body.userId})
+    console.log(passwords)
     return res.status(200).json(passwords)
   } catch(err) {
     return res.status(500).json(err)
@@ -30,8 +33,22 @@ const deletePassword = async(req, res) => {
   }
 }
 
+const update = async(req, res) => {
+  try {
+    const newPass = await bcrypt.hash(req.body.password, SALT_ROUNDS)
+    req.body.password = newPass
+    const password = await Password.findByIdAndUpdate(req.params.id, await req.body)
+
+    await password.save()
+    return res.status(201).json(password)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+}
+
 export {
   index,
   create,
-  deletePassword as delete
+  deletePassword as delete,
+  update
 }
