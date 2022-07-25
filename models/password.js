@@ -14,7 +14,7 @@ const passwordSchema = new Schema(
       type: String,
       required: true
     },
-    password: {
+    passW: {
       type: String,
       required: true
     }
@@ -24,17 +24,17 @@ const passwordSchema = new Schema(
 
 passwordSchema.set('toJSON', {
   transform: function (doc, ret) {
-    delete ret.password
+    delete ret.passW
     return ret
   },
 })
 
 passwordSchema.pre('save', function (next) {
   const pass = this
-  if (!pass.isModified('password')) return next()
-  bcrypt.hash(pass.password, SALT_ROUNDS)
+  if (!pass.isModified('passW')) return next()
+  bcrypt.hash(pass.passW, SALT_ROUNDS)
   .then(hash => {
-    pass.password = hash
+    pass.passW = hash
     next()
   })
   .catch(err => {
@@ -43,7 +43,7 @@ passwordSchema.pre('save', function (next) {
 })
 
 passwordSchema.methods.comparePassword = function (tryPassword, cb) {
-  bcrypt.compare(tryPassword, this.password, cb)
+  bcrypt.compare(tryPassword, this.passW, cb)
 }
 
 const Password = mongoose.model('Password', passwordSchema)

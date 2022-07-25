@@ -7,6 +7,7 @@ const index = async(req, res) => {
   try{
     const passwords = await Password.find({userId: req.body.userId})
     console.log(passwords)
+    console.log('@@@@@@',req.user)
     return res.status(200).json(passwords)
   } catch(err) {
     return res.status(500).json(err)
