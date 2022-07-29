@@ -6,8 +6,10 @@ const index = async(req, res) => {
   req.body.userId = req.user.profile
   try{
     const passwords = await Password.find({userId: req.body.userId})
+
     console.log(passwords)
     console.log('@@@@@@',req.user)
+
     return res.status(200).json(passwords)
   } catch(err) {
     return res.status(500).json(err)
@@ -16,7 +18,7 @@ const index = async(req, res) => {
 
 const create = async(req, res) => {
   req.body.userId = req.user.profile
-  try {
+  try { 
     const password = new Password(req.body)
     await password.save()
     return res.status(200).json(password)
