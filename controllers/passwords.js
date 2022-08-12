@@ -18,6 +18,7 @@ const index = async(req, res) => {
 
 const create = async(req, res) => {
   req.body.userId = req.user.profile
+  console.log('\n@@@@@@@@@@@@@@@@@@@@@@@@@@@\n', req.body ,'\n@@@@@@@@@@@@@@@@@@@@@@@@@@@\n')
   try { 
     const password = new Password(req.body)
     await password.save()
